@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mallorca Golf Trophy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green: #1a3a2a;
+  --green-mid: #2d6a4f;
+  --green-light: #52b788;
+  --green-pale: #d8f3dc;
+  --gold: #c9a84c;
+  --gold-light: #f4e4b0;
+  --cream: #faf8f3;
+  --sand: #e8e0d0;
+  --text: #1a1a18;
+  --text-muted: #6b6b60;
+  --white: #ffffff;
+  --radius: 12px;
+  --radius-sm: 8px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--cream);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* HEADER */
+.site-header {
+  background: var(--green);
+  color: var(--cream);
+  padding: 1.5rem 1.5rem 0;
+}
+.site-header-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+.site-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(22px, 4vw, 32px);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+.site-subtitle {
+  font-size: 13px;
+  color: var(--green-light);
+  margin-top: 4px;
+  font-weight: 300;
+}
+
+/* YEAR TABS */
+.year-tabs {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.year-tab {
+  padding: 6px 16px;
+  border-radius: 99px 99px 0 0;
+  border: none;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  cursor: pointer;
+  background: rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.6);
+  transition: all 0.15s;
+}
+.year-tab:hover { background: rgba(255,255,255,0.18); color: white; }
+.year-tab.active { background: var(--cream); color: var(--green); font-weight: 500; }
+.year-tab-add {
+  padding: 6px 12px;
+  border-radius: 99px;
+  border: 1px dashed rgba(255,255,255,0.3);
+  background: transparent;
+  color: rgba(255,255,255,0.5);
+  font-size: 18px;
+  cursor: pointer;
+  line-height: 1;
+}
+.year-tab-add:hover { border-color: rgba(255,255,255,0.6); color: white; }
+
+/* NAV */
+.main-nav {
+  background: var(--white);
+  border-bottom: 1px solid var(--sand);
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  padding: 0 1.5rem;
+}
+.nav-btn {
+  padding: 14px 20px;
+  border: none;
+  background: transparent;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text-muted);
+  cursor: pointer;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: all 0.15s;
+}
+.nav-btn:hover { color: var(--text); }
+.nav-btn.active { color: var(--green-mid); font-weight: 500; border-bottom-color: var(--green-mid); }
+
+/* MAIN */
+.main { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+
+/* CARDS */
+.card {
+  background: var(--white);
+  border: 1px solid var(--sand);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+}
+.card-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 17px;
+  font-weight: 400;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* GRIDS */
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+.grid4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+@media(max-width: 640px) { .grid2, .grid3 { grid-template-columns: 1fr; } }
+
+/* METRIC */
+.metric {
+  background: var(--cream);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+}
+.metric-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 6px; }
+.metric-value { font-family: 'DM Serif Display', serif; font-size: 28px; font-weight: 400; color: var(--green); }
+
+/* RANKING TABLE */
+.rank-table { width: 100%; border-collapse: collapse; }
+.rank-table th { text-align: left; padding: 8px 10px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); font-weight: 400; border-bottom: 1px solid var(--sand); }
+.rank-table td { padding: 10px 10px; border-bottom: 1px solid var(--cream); font-size: 14px; }
+.rank-table tr:last-child td { border-bottom: none; }
+.rank-table tr:hover td { background: var(--cream); }
+.medal { font-size: 16px; width: 28px; display: inline-block; }
+.rank-num { color: var(--text-muted); font-size: 13px; width: 28px; display: inline-block; text-align: center; }
+.player-name { font-weight: 500; }
+.pts-cell { text-align: right; font-family: 'DM Serif Display', serif; font-size: 18px; color: var(--green-mid); }
+
+/* BADGE */
+.badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 99px;
+  font-size: 11px;
+  background: var(--green-pale);
+  color: var(--green-mid);
+  font-weight: 500;
+  margin-left: 8px;
+}
+.badge-gold { background: var(--gold-light); color: #7a5c10; }
+
+/* SCORES TABLE */
+.scores-wrap { overflow-x: auto; }
+.scores-table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 600px; }
+.scores-table th { padding: 8px 6px; background: var(--green); color: var(--cream); font-weight: 400; font-size: 11px; text-align: center; white-space: nowrap; }
+.scores-table th:first-child { text-align: left; padding-left: 10px; }
+.scores-table td { padding: 4px 4px; border-bottom: 1px solid var(--cream); text-align: center; }
+.scores-table td:first-child { text-align: left; padding-left: 10px; font-weight: 500; }
+.scores-table tr:hover td { background: var(--cream); }
+.scores-table .total-row td { background: var(--green-pale); font-weight: 500; border-top: 2px solid var(--green-light); }
+.score-input {
+  width: 46px;
+  padding: 4px;
+  text-align: center;
+  border: 1px solid var(--sand);
+  border-radius: 6px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  background: var(--cream);
+  color: var(--text);
+}
+.score-input:focus { outline: none; border-color: var(--green-light); background: white; }
+.par-cell { color: var(--text-muted); }
+.si-cell { color: var(--text-muted); font-size: 12px; }
+
+/* DAY SELECTOR */
+.day-selector { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1.25rem; }
+.day-btn {
+  padding: 8px 18px;
+  border-radius: 99px;
+  border: 1px solid var(--sand);
+  background: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  cursor: pointer;
+  color: var(--text-muted);
+  transition: all 0.15s;
+}
+.day-btn:hover { border-color: var(--green-light); color: var(--green); }
+.day-btn.active { background: var(--green); color: var(--cream); border-color: var(--green); }
+
+/* SETUP */
+.setup-table { width: 100%; border-collapse: collapse; }
+.setup-table th { text-align: left; padding: 8px 10px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); font-weight: 400; border-bottom: 1px solid var(--sand); }
+.setup-table td { padding: 6px 8px; border-bottom: 1px solid var(--cream); }
+.setup-table input { width: 100%; padding: 6px 10px; border: 1px solid var(--sand); border-radius: 6px; font-family: 'DM Sans', sans-serif; font-size: 13px; background: var(--cream); color: var(--text); }
+.setup-table input:focus { outline: none; border-color: var(--green-light); background: white; }
+.setup-table input[type=number] { width: 70px; -moz-appearance: textfield; }
+.setup-table input[type=number]::-webkit-outer-spin-button,
+.setup-table input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
+
+/* BUTTONS */
+.btn {
+  padding: 8px 18px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--sand);
+  background: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  cursor: pointer;
+  color: var(--text);
+  transition: all 0.15s;
+}
+.btn:hover { background: var(--cream); border-color: var(--green-light); }
+.btn-primary { background: var(--green); color: var(--cream); border-color: var(--green); }
+.btn-primary:hover { background: var(--green-mid); }
+.btn-sm { padding: 4px 12px; font-size: 12px; }
+.btn-danger { color: #b00; border-color: #f9c; }
+.btn-danger:hover { background: #fff5f5; }
+.btn-gold { background: var(--gold); color: var(--white); border-color: var(--gold); }
+
+/* HISTORY */
+.history-year { margin-bottom: 2rem; }
+.history-year-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 22px;
+  color: var(--green);
+  margin-bottom: 1rem;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--green-pale);
+}
+
+/* SECTION LABEL */
+.section-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin: 1.25rem 0 0.75rem;
+}
+
+/* UTILITY */
+.hidden { display: none; }
+.flex { display: flex; align-items: center; gap: 8px; }
+.flex-between { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+.mt1 { margin-top: 1rem; }
+.info-box {
+  padding: 10px 14px;
+  background: var(--green-pale);
+  color: var(--green-mid);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  margin-bottom: 1rem;
+}
+.hole-grid { display: grid; grid-template-columns: repeat(18, 1fr); gap: 4px; margin-bottom: 8px; }
+.hole-cell input { width: 100%; padding: 5px 2px; text-align: center; border: 1px solid var(--sand); border-radius: 4px; font-size: 12px; background: var(--cream); font-family: 'DM Sans', sans-serif; -moz-appearance: textfield; }
+.hole-cell input::-webkit-outer-spin-button, .hole-cell input::-webkit-inner-spin-button { -webkit-appearance: none; }
+.hole-cell input:focus { outline: none; border-color: var(--green-light); background: white; }
+.hole-label { font-size: 11px; color: var(--text-muted); text-align: center; }
+@media(max-width: 700px) { .hole-grid { grid-template-columns: repeat(9, 1fr); } }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header-top">
+    <div>
+      <div class="site-title">⛳ Mallorca Golf Trophy</div>
+      <div class="site-subtitle">Stableford Netto · Jährliche Auswertung</div>
+    </div>
+    <div class="year-tabs" id="yearTabs"></div>
+  </div>
+</header>
+
+<nav class="main-nav">
+  <button class="nav-btn active" onclick="showPage('rangliste')">Rangliste</button>
+  <button class="nav-btn" onclick="showPage('scores')">Scores eingeben</button>
+  <button class="nav-btn" onclick="showPage('setup')">Setup</button>
+  <button class="nav-btn" onclick="showPage('history')">Verlauf</button>
+</nav>
+
+<main class="main">
+  <div id="page-rangliste"></div>
+  <div id="page-scores" class="hidden"></div>
+  <div id="page-setup" class="hidden"></div>
+  <div id="page-history" class="hidden"></div>
+</main>
+
+<script>
+const KEY = 'mgt_golf_v3';
+
+function load() {
+  try { return JSON.parse(localStorage.getItem(KEY)) || defaultData(); }
+  catch(e) { return defaultData(); }
+}
+function save(d) { localStorage.setItem(KEY, JSON.stringify(d)); }
+
+function defaultData() {
+  return {
+    currentYear: 2025,
+    years: {
+      2025: {
+        players: [
+          {name:'Bauer',hcp:18},{name:'Markus',hcp:15},{name:'Junior',hcp:24},
+          {name:'Yannick',hcp:28},{name:'Bernd',hcp:20},{name:'Kalli',hcp:12},
+          {name:'Heiner',hcp:10},{name:'Ingo W.',hcp:17},{name:'Eike',hcp:22},
+          {name:'Ingo S.',hcp:19},{name:'Jochen',hcp:21},{name:'Wischi',hcp:9}
+        ],
+        days: [
+          {course:'Bendinat', slope:125, par:[4,3,4,3,4,4,3,4,4,4,4,3,4,5,4,4,3,5], si:[10,2,14,6,18,8,4,16,12,1,5,9,13,3,17,7,15,11], scores:{}},
+          {course:'Son Quint', slope:120, par:[4,4,3,4,4,4,5,4,3,4,4,3,5,3,4,4,5,4], si:[3,11,17,7,13,1,15,9,5,17,9,3,13,7,1,11,5,15], scores:{}},
+          {course:'Son Vida', slope:122, par:[4,3,4,3,4,5,4,3,4,4,5,3,5,4,4,3,4,5], si:[7,17,3,13,9,1,11,15,5,13,1,17,3,9,7,15,11,5], scores:{}}
+        ]
+      }
+    }
+  };
+}
+
+let data = load();
+let currentPage = 'rangliste';
+let currentDay = 0;
+
+function yr() { return data.years[data.currentYear]; }
+
+function courseHcp(hcp, slope) {
+  return Math.round(hcp * (slope || 113) / 113);
+}
+
+function calcVorgabe(hcp, si, slope) {
+  const chcp = courseHcp(hcp, slope);
+  const full  = Math.floor(chcp / 18);
+  const extra = chcp % 18;
+  return full + (si <= extra ? 1 : 0);
+}
+
+function stablefordPts(strokes, par) {
+  const diff = par - strokes;
+  if (diff <= -2) return 0;
+  if (diff === -1) return 1;
+  return Math.max(0, 2 + diff);
+}
+
+function holePts(brutto, par, vorgabe) {
+  const bruttoP = stablefordPts(brutto, par);
+  const nettoP  = stablefordPts(brutto - vorgabe, par);
+  return bruttoP + (nettoP * 2);
+}
+
+function playerDayPts(pi, di) {
+  const day = yr().days[di];
+  const p = yr().players[pi];
+  const sc = day.scores[pi] || [];
+  let t = 0;
+  for (let h = 0; h < 18; h++) {
+    const b = parseInt(sc[h]);
+    if (!isNaN(b) && b > 0) t += holePts(b, day.par[h], calcVorgabe(p.hcp, day.si[h], day.slope));
+  }
+  return t;
+}
+
+function playerTotalPts(pi) {
+  return yr().days.reduce((s, _, di) => s + playerDayPts(pi, di), 0);
+}
+
+function playerPar3Pts(pi) {
+  let t = 0;
+  yr().days.forEach((day, di) => {
+    const p = yr().players[pi];
+    const sc = day.scores[pi] || [];
+    for (let h = 0; h < 18; h++) {
+      if (day.par[h] === 3) {
+        const b = parseInt(sc[h]);
+        if (!isNaN(b) && b > 0) t += holePts(b, day.par[h], calcVorgabe(p.hcp, day.si[h], day.slope));
+      }
+    }
+  });
+  return t;
+}
+
+function ranking(scoreFn) {
+  return yr().players.map((p, i) => ({name:p.name, pts:scoreFn(i), idx:i})).sort((a,b)=>b.pts-a.pts);
+}
+
+function rankingForYear(y, scoreFn) {
+  const savedYear = data.currentYear;
+  data.currentYear = y;
+  const r = ranking(scoreFn);
+  data.currentYear = savedYear;
+  return r;
+}
+
+// ── YEAR TABS ──
+function renderYearTabs() {
+  const el = document.getElementById('yearTabs');
+  const years = Object.keys(data.years).sort();
+  el.innerHTML = years.map(y =>
+    `<button class="year-tab${y == data.currentYear ? ' active' : ''}" onclick="switchYear(${y})">${y}</button>`
+  ).join('') + `<button class="year-tab-add" onclick="addYear()" title="Neues Jahr">+</button>`;
+}
+
+function switchYear(y) { data.currentYear = parseInt(y); save(data); renderAll(); }
+
+function addYear() {
+  const y = prompt('Neues Jahr (z.B. 2026):');
+  if (!y || isNaN(y) || y.length !== 4) return;
+  if (data.years[y]) { alert('Jahr existiert bereits.'); return; }
+  const prev = JSON.parse(JSON.stringify(yr()));
+  prev.days.forEach(d => { d.scores = {}; });
+  data.years[parseInt(y)] = prev;
+  data.currentYear = parseInt(y);
+  save(data);
+  renderAll();
+}
+
+// ── NAV ──
+function showPage(page) {
+  document.querySelectorAll('[id^=page-]').forEach(el => el.classList.add('hidden'));
+  document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
+  document.getElementById('page-' + page).classList.remove('hidden');
+  const labels = {rangliste:'Rangliste',scores:'Scores',setup:'Setup',history:'Verlauf'};
+  document.querySelectorAll('.nav-btn').forEach(el => {
+    if (el.textContent.trim() === labels[page]) el.classList.add('active');
+  });
+  currentPage = page;
+  renderPage(page);
+}
+
+function renderPage(page) {
+  if (page === 'rangliste') renderRangliste();
+  if (page === 'scores')    renderScores();
+  if (page === 'setup')     renderSetup();
+  if (page === 'history')   renderHistory();
+}
+
+// ── RANGLISTE ──
+function renderRangliste() {
+  const y = yr();
+  const medals = ['🥇','🥈','🥉'];
+  const trophy = ranking(playerTotalPts);
+  const par3   = ranking(playerPar3Pts);
+
+  let h = `<div class="grid3" style="margin-bottom:1rem">`;
+  h += metric('Spieler', y.players.length);
+  h += metric('Spieltage', y.days.length);
+  h += metric('Jahr', data.currentYear);
+  h += `</div>`;
+
+  h += `<div class="grid2">`;
+  h += rankCard('🏆 Trophy Gesamtwertung', trophy, medals, 'badge-gold');
+  h += rankCard('⛳ Par-3-Wertung', par3, medals, '');
+  h += `</div>`;
+
+  const cols = Math.min(y.days.length, 3);
+  h += `<div class="grid${cols}" style="margin-top:0">`;
+  y.days.forEach((_, di) => {
+    h += rankCard(`Tag ${di+1}: ${y.days[di].course}`, ranking(pi => playerDayPts(pi, di)), medals, '', 6);
+  });
+  h += `</div>`;
+
+  document.getElementById('page-rangliste').innerHTML = h;
+}
+
+function metric(label, value) {
+  return `<div class="metric"><div class="metric-label">${label}</div><div class="metric-value">${value}</div></div>`;
+}
+
+function rankCard(title, players, medals, badgeClass, limit) {
+  limit = limit || players.length;
+  let h = `<div class="card"><div class="card-title">${title}</div>
+    <table class="rank-table">
+    <tr><th></th><th>Spieler</th><th style="text-align:right">Punkte</th></tr>`;
+  players.slice(0, limit).forEach((p, i) => {
+    const m = i < 3 ? `<span class="medal">${medals[i]}</span>` : `<span class="rank-num">${i+1}</span>`;
+    h += `<tr><td>${m}</td><td class="player-name">${p.name}</td><td class="pts-cell">${p.pts}</td></tr>`;
+  });
+  h += `</table></div>`;
+  return h;
+}
+
+// ── SCORES ──
+let currentPlayerIdx = 0;
+
+function renderScores() {
+  const y = yr();
+  const day = y.days[currentDay];
+  if (currentPlayerIdx >= y.players.length) currentPlayerIdx = 0;
+  const pi = currentPlayerIdx;
+  const p = y.players[pi];
+
+  let h = `<div class="day-selector">`;
+  y.days.forEach((d, i) => {
+    h += `<button class="day-btn${i===currentDay?' active':''}" onclick="setDay(${i})">Tag ${i+1}: ${d.course}</button>`;
+  });
+  h += `</div>`;
+
+  // Player selector
+  h += `<div class="day-selector" style="margin-bottom:1rem">`;
+  y.players.forEach((pl, i) => {
+    const done = (day.scores[i]||[]).filter(s=>s>0).length === 18;
+    h += `<button class="day-btn${i===pi?' active':''}" onclick="setPlayer(${i})">${pl.name}${done?' ✓':''}</button>`;
+  });
+  h += `</div>`;
+
+  h += `<div class="card">`;
+  h += `<div class="flex-between" style="margin-bottom:1rem">`;
+  h += `<div class="card-title" style="margin:0">${p.name} <span class="badge">HCP ${p.hcp}</span> <span class="badge">${day.course}</span></div>`;
+  h += `<div style="display:flex;gap:8px">`;
+  if (pi > 0) h += `<button class="btn btn-sm" onclick="setPlayer(${pi-1})">← ${y.players[pi-1].name}</button>`;
+  if (pi < y.players.length-1) h += `<button class="btn btn-sm btn-primary" onclick="setPlayer(${pi+1})">${y.players[pi+1].name} →</button>`;
+  h += `</div></div>`;
+
+  h += `<table class="scores-table"><tr>
+    <th style="text-align:left">Loch</th><th>Par</th><th>SI</th><th>Vorgabe</th>
+    <th>Brutto</th><th>Netto</th><th>Brutto Pkt</th><th>Netto Pkt ×2</th><th>Gesamt</th></tr>`;
+
+  const sc = day.scores[pi] || [];
+  let totalPts = 0;
+
+  for (let hole = 0; hole < 18; hole++) {
+    const par = day.par[hole];
+    const si  = day.si[hole];
+    const v   = calcVorgabe(p.hcp, si, day.slope);
+    const brutto = parseInt(sc[hole]);
+    const hasScore = !isNaN(brutto) && brutto > 0;
+    const netto = hasScore ? brutto - v : null;
+    const bPts  = hasScore ? stablefordPts(brutto, par) : '-';
+    const nPts  = hasScore ? stablefordPts(netto, par) : '-';
+    const tot   = hasScore ? stablefordPts(brutto, par) + stablefordPts(netto, par)*2 : '-';
+    if (hasScore) totalPts += stablefordPts(brutto, par) + stablefordPts(netto, par)*2;
+
+    h += `<tr>
+      <td><b>${hole+1}</b></td>
+      <td class="par-cell">${par}</td>
+      <td class="si-cell">${si}</td>
+      <td class="si-cell">${v}</td>
+      <td><input type="number" class="score-input" id="si_${pi}_${hole}" min="1" max="15"
+        value="${hasScore?brutto:''}" placeholder="${par+v}"
+        onchange="saveScore(${pi},${hole},this.value)"
+        onkeydown="handleScoreKey(event,${pi},${hole})"></td>
+      <td class="par-cell">${hasScore?netto:'-'}</td>
+      <td style="text-align:center;color:var(--text-muted)">${bPts}</td>
+      <td style="text-align:center;color:var(--green-mid)">${nPts=== '-'?'-':nPts+'×2='+(nPts*2)}</td>
+      <td style="text-align:center;font-weight:500">${tot}</td>
+    </tr>`;
+  }
+
+  h += `<tr class="total-row">
+    <td colspan="4">Gesamt</td>
+    <td colspan="4"></td>
+    <td style="font-weight:500;font-family:'DM Serif Display',serif;font-size:18px;text-align:center">${totalPts}</td>
+  </tr></table></div>`;
+
+  document.getElementById('page-scores').innerHTML = h;
+
+  // Focus first empty input
+  for (let hole = 0; hole < 18; hole++) {
+    const inp = document.getElementById(`si_${pi}_${hole}`);
+    if (inp && !inp.value) { inp.focus(); break; }
+  }
+}
+
+function handleScoreKey(e, pi, hole) {
+  if (e.key === 'Enter' || e.key === 'Tab') {
+    e.preventDefault();
+    saveScore(pi, hole, e.target.value);
+    // Move to next hole for same player
+    if (hole < 17) {
+      const next = document.getElementById(`si_${pi}_${hole+1}`);
+      if (next) next.focus();
+    } else {
+      // Last hole – move to next player
+      const y = yr();
+      if (pi < y.players.length - 1) setPlayer(pi + 1);
+    }
+  }
+}
+
+function setDay(i) { currentDay = i; renderScores(); }
+function setPlayer(i) { currentPlayerIdx = i; renderScores(); }
+
+function saveScore(pi, hole, val) {
+  const day = yr().days[currentDay];
+  if (!day.scores[pi]) day.scores[pi] = [];
+  day.scores[pi][hole] = val === '' ? '' : parseInt(val);
+  save(data);
+}
+
+// ── SETUP ──
+function renderSetup() {
+  const y = yr();
+
+  let h = `<div class="card">`;
+  h += `<div class="flex-between" style="margin-bottom:1rem">`;
+  h += `<div class="card-title" style="margin:0">Spieler & Handicaps – ${data.currentYear}</div>`;
+  h += `<button class="btn btn-primary btn-sm" onclick="addPlayer()">+ Spieler hinzufügen</button>`;
+  h += `</div>`;
+  h += `<table class="setup-table">
+    <tr><th>Spieler</th><th>Handicap</th><th></th></tr>`;
+  y.players.forEach((p, i) => {
+    h += `<tr>
+      <td><input value="${p.name}" onchange="updatePlayer(${i},'name',this.value)"></td>
+      <td><input type="number" min="0" max="54" value="${p.hcp}" onchange="updatePlayer(${i},'hcp',this.value)"></td>
+      <td><button class="btn btn-sm btn-danger" onclick="removePlayer(${i})">✕</button></td>
+    </tr>`;
+  });
+  h += `</table></div>`;
+
+  y.days.forEach((d, di) => {
+    h += `<div class="card">`;
+    h += `<div class="flex-between" style="margin-bottom:1rem">`;
+    h += `<div class="card-title" style="margin:0">Tag ${di+1}</div>`;
+    if (y.days.length > 1) h += `<button class="btn btn-sm btn-danger" onclick="removeDay(${di})">Tag entfernen</button>`;
+    h += `</div>`;
+    h += `<div class="grid2" style="margin-bottom:1rem">
+      <div><label style="font-size:12px;color:var(--text-muted);display:block;margin-bottom:4px">Platzname</label>
+      <input style="padding:7px 12px;border:1px solid var(--sand);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:14px;background:var(--cream);color:var(--text);width:100%"
+      value="${d.course}" onchange="updateDay(${di},'course',this.value)"></div>
+      <div><label style="font-size:12px;color:var(--text-muted);display:block;margin-bottom:4px">Slope Rating <span style="color:var(--text-muted);font-weight:300">(Scorecard, z.B. 125)</span></label>
+      <input type="number" min="55" max="155" style="padding:7px 12px;border:1px solid var(--sand);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:14px;background:var(--cream);color:var(--text);width:100%"
+      value="${d.slope||113}" onchange="updateDay(${di},'slope',parseInt(this.value))">
+      <div style="font-size:11px;color:var(--text-muted);margin-top:4px">→ Spielvorgaben: ${y.players.map(p=>`${p.name}: ${courseHcp(p.hcp, d.slope||113)}`).join(', ')}</div>
+      </div></div>`;
+
+    h += `<div class="section-label">Par pro Loch (1–18)</div>`;
+    h += `<div class="hole-grid">`;
+    for (let hole = 0; hole < 18; hole++) {
+      h += `<div><div class="hole-label">${hole+1}</div>
+        <div class="hole-cell"><input type="number" min="3" max="6" value="${d.par[hole]}"
+        onchange="updateHole(${di},'par',${hole},this.value)"></div></div>`;
+    }
+    h += `</div>`;
+
+    h += `<div class="section-label" style="margin-top:12px">Stroke Index pro Loch (1–18)</div>`;
+    h += `<div class="hole-grid">`;
+    for (let hole = 0; hole < 18; hole++) {
+      h += `<div><div class="hole-label">${hole+1}</div>
+        <div class="hole-cell"><input type="number" min="1" max="18" value="${d.si[hole]}"
+        onchange="updateHole(${di},'si',${hole},this.value)"></div></div>`;
+    }
+    h += `</div></div>`;
+  });
+
+  h += `<button class="btn mt1" onclick="addDay()">+ Spieltag hinzufügen</button>`;
+
+  document.getElementById('page-setup').innerHTML = h;
+}
+
+function updatePlayer(i, field, val) {
+  yr().players[i][field] = field === 'hcp' ? parseInt(val) : val;
+  save(data);
+}
+function removePlayer(i) {
+  if (!confirm(`"${yr().players[i].name}" wirklich entfernen?`)) return;
+  yr().players.splice(i, 1);
+  save(data); renderSetup();
+}
+function addPlayer() {
+  yr().players.push({name:'Neuer Spieler', hcp:18});
+  save(data); renderSetup();
+}
+function updateDay(di, field, val) { yr().days[di][field] = val; save(data); }
+function updateHole(di, field, hole, val) { yr().days[di][field][hole] = parseInt(val); save(data); }
+function addDay() {
+  yr().days.push({course:'Neuer Platz', slope:113, par:Array(18).fill(4), si:Array.from({length:18},(_,i)=>i+1), scores:{}});
+  save(data); renderSetup();
+}
+function removeDay(di) {
+  if (!confirm(`Tag ${di+1} (${yr().days[di].course}) wirklich entfernen?`)) return;
+  yr().days.splice(di, 1);
+  save(data); renderSetup();
+}
+
+// ── HISTORY ──
+function renderHistory() {
+  const years = Object.keys(data.years).sort().reverse();
+  if (years.length === 0) {
+    document.getElementById('page-history').innerHTML = '<p style="color:var(--text-muted)">Noch keine Daten.</p>';
+    return;
+  }
+
+  let h = '';
+  years.forEach(y => {
+    const yData = data.years[y];
+    const medals = ['🥇','🥈','🥉'];
+    const trophy = rankingForYear(parseInt(y), playerTotalPts);
+    const par3   = rankingForYear(parseInt(y), playerPar3Pts);
+
+    h += `<div class="history-year">`;
+    h += `<div class="history-year-title">${y} <span style="font-size:14px;color:var(--text-muted);font-family:'DM Sans',sans-serif;font-weight:300">${yData.days.map(d=>d.course).join(' · ')}</span></div>`;
+    h += `<div class="grid2">`;
+    h += rankCard('🏆 Trophy', trophy, medals, 'badge-gold', 3);
+    h += rankCard('⛳ Par-3', par3, medals, '', 3);
+    h += `</div></div>`;
+  });
+
+  document.getElementById('page-history').innerHTML = h;
+}
+
+// ── INIT ──
+function renderAll() {
+  renderYearTabs();
+  renderPage(currentPage);
+}
+
+renderAll();
+</script>
+</body>
+</html>
